@@ -17,10 +17,34 @@ pnpm build    # tsc -b && vite build
 pnpm lint
 ```
 
-Until `@tradade/astra-mastering-ui` is published, this repo consumes it from a
-sibling checkout through `link:` (see `package.json`), so edits in the package
-show up here live. Point that path at your local AstraStudio clone, then re-run
-`pnpm install`.
+## Shared packages
+
+Both halves ship as public packages on npm, and `pnpm install` pulls them from
+the registry — no sibling checkout needed:
+
+- `@tradade/astra-mastering-ui` — workspace, theme, and landing page (`^0.1.0`)
+- `@tradade/astra-mastering` — the DSP chain (`^0.1.1`)
+
+That matters for CI: a clean clone must build from the registry alone. Vercel
+runs `pnpm install` and `pnpm build` in a checkout where
+`../astra-audio-project` does not exist, so a `link:` dependency there fails
+the build with `failed to resolve import`.
+
+### Working on the UI package locally
+
+Point the dependency at your AstraStudio checkout for live edits, then install:
+
+```jsonc
+// package.json (temporary)
+"@tradade/astra-mastering-ui": "link:../astra-audio-project/packages/astra-mastering-ui"
+```
+
+```bash
+pnpm install
+```
+
+Switch it back to the version range before committing; `link:` paths break the
+deploy.
 
 ## What it does
 

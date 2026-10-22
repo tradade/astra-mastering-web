@@ -12,8 +12,8 @@ importers:
         specifier: ^0.1.1
         version: 0.1.1
       '@tradade/astra-mastering-ui':
-        specifier: link:../astra-audio-project/packages/astra-mastering-ui
-        version: link:../astra-audio-project/packages/astra-mastering-ui
+        specifier: ^0.1.0
+        version: 0.1.0(react-dom@19.3.1(react@19.3.1))(react@19.3.1)
       lucide-react:
         specifier: ^0.363.0
         version: 0.363.0(react@19.3.1)
@@ -406,6 +406,12 @@ packages:
 
   '@rolldown/pluginutils@1.0.1':
     resolution: {integrity: sha512-2j9bGt5Jh8hj+vPtgzPtl72j0yRxHAyumoo6TNfAjsLB04UtpSvPbPcDcBMxz7n+9CYB0c1GxQFxYRg2jimqGw==}
+
+  '@tradade/astra-mastering-ui@0.1.0':
+    resolution: {integrity: sha512-HfzoYtyhabXj6bGfBzn6BcsLs0zT41xLRrpcllcdEs8vp4FRUerIt8q78FMdntYIextKp/1Mi5XsQeoICUg7+A==}
+    peerDependencies:
+      react: ^19.0.0
+      react-dom: ^19.0.0
 
   '@tradade/astra-mastering@0.1.1':
     resolution: {integrity: sha512-fvyPj49d/qbSFVeJ4BRjSHdkz4n/E7FZ5kkotjbvwjEVzZahlb5Aaj94zdTZQSHksI3VTWlMTo9yBiRaEHpAMg==}
@@ -843,6 +849,11 @@ packages:
     peerDependencies:
       react: ^16.5.1 || ^17.0.0 || ^18.0.0
 
+  lucide-react@0.475.0:
+    resolution: {integrity: sha512-NJzvVu1HwFVeZ+Gwq2q00KygM1aBhy/ZrhY9FsAgJtpB+E4R7uxRk9M2iKvHa6/vNxZydIB59htha4c2vvwvVg==}
+    peerDependencies:
+      react: ^16.5.1 || ^17.0.0 || ^18.0.0 || ^19.0.0
+
   minimatch@10.2.6:
     resolution: {integrity: sha512-vpLQEs+VLCr1nU0BXS07maYoFwlDAH0gngQuuttxIwutDFEMHq2blX+8vpgxDdK3J1PwjCJiep77OitTZ4Ll1A==}
     engines: {node: 18 || 20 || >=22}
@@ -1035,6 +1046,9 @@ packages:
         optional: true
       yaml:
         optional: true
+
+  wavesurfer.js@7.12.12:
+    resolution: {integrity: sha512-fyKNuREQTliCl4b9w7pUzpFXQIkX5tcdYu1o6vBdH+NlUXvTxshvfbG2hj8OxDevzQNZlDTHzZGyAT3FhuutWw==}
 
   which@2.0.2:
     resolution: {integrity: sha512-BLI3Tl1TW3Pvl70l3yq3Y64i+awpwXqsGBYWkkqMtnbXgrMD+yj7rhW0kuEDxzJaYXGjEW5ogapKNMEKNMjibA==}
@@ -1357,6 +1371,14 @@ snapshots:
     optional: true
 
   '@rolldown/pluginutils@1.0.1': {}
+
+  '@tradade/astra-mastering-ui@0.1.0(react-dom@19.3.1(react@19.3.1))(react@19.3.1)':
+    dependencies:
+      '@tradade/astra-mastering': 0.1.1
+      lucide-react: 0.475.0(react@19.3.1)
+      react: 19.3.1
+      react-dom: 19.3.1(react@19.3.1)
+      wavesurfer.js: 7.12.12
 
   '@tradade/astra-mastering@0.1.1':
     dependencies:
@@ -1772,6 +1794,10 @@ snapshots:
     dependencies:
       react: 19.3.1
 
+  lucide-react@0.475.0(react@19.3.1):
+    dependencies:
+      react: 19.3.1
+
   minimatch@10.2.6:
     dependencies:
       brace-expansion: 5.0.12
@@ -1927,6 +1953,8 @@ snapshots:
       '@types/node': 24.19.2
       fsevents: 2.3.3
       sass: 1.106.1
+
+  wavesurfer.js@7.12.12: {}
 
   which@2.0.2:
     dependencies:
