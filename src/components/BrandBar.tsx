@@ -1,6 +1,6 @@
 import React from 'react';
 import { ArrowLeft } from 'lucide-react';
-import { ThemeToggle } from '@tradade/astra-mastering-ui';
+import { ThemeToggle, StyleSwitcher } from '@tradade/astra-mastering-ui';
 
 interface BrandBarProps {
   onHome?: () => void;
@@ -21,6 +21,7 @@ const BrandBar: React.FC<BrandBarProps> = ({ onHome }) => (
     </div>
     <div className="brandbar__actions">
       <p className="brandbar__note">Local-first · your audio never leaves this device</p>
+      <StyleSwitcher />
       <ThemeToggle />
     </div>
   </header>

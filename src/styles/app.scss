@@ -2,8 +2,12 @@
 // from @tradade/astra-mastering-ui/styles.
 
 @use 'sass:list';
+@use 'sass:math';
+@use 'sass:color';
 
 .brandbar {
+  position: relative;
+  z-index: 40;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -12,6 +16,29 @@
   padding: 14px 28px;
   border-bottom: 1px solid var(--border-color);
   background: var(--nav-bg);
+  backdrop-filter: blur(14px) saturate(1.15);
+  -webkit-backdrop-filter: blur(14px) saturate(1.15);
+}
+
+// CP2077 hairline: the accent leads decay across the bar under the chrome.
+.brandbar::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -1px;
+  height: 1px;
+  pointer-events: none;
+  opacity: 0.6;
+  background: linear-gradient(
+    90deg,
+    var(--accent-primary) 0%,
+    color-mix(in srgb, var(--accent-primary) 35%, transparent) 18%,
+    transparent 42%,
+    transparent 62%,
+    color-mix(in srgb, var(--accent-secondary) 35%, transparent) 82%,
+    var(--accent-secondary) 100%
+  );
 }
 
 .brandbar__identity {
@@ -28,7 +55,7 @@
   margin-right: 6px;
   padding: 0 10px;
   border: 1px solid var(--border-color);
-  border-radius: var(--radius-sm);
+  border-radius: var(--radius-md);
   background: transparent;
   color: var(--color-text-secondary);
   font-family: var(--font-body);
@@ -39,14 +66,18 @@
 }
 
 .brandbar__home:hover {
-  color: var(--color-text-primary);
+  color: var(--accent-primary);
   border-color: var(--accent-primary);
+  box-shadow:
+    0 0 0 1px color-mix(in srgb, var(--accent-primary) 30%, transparent),
+    0 0 14px color-mix(in srgb, var(--accent-primary) 16%, transparent);
 }
 
 .brandbar__mark {
   color: var(--accent-primary);
   font-size: 18px;
   line-height: 1;
+  text-shadow: 0 0 10px color-mix(in srgb, var(--accent-primary) 55%, transparent);
 }
 
 .brandbar__name {
@@ -59,13 +90,14 @@
 
 .brandbar__badge {
   padding: 2px 8px;
-  border: 1px solid var(--border-color);
+  border: 1px solid color-mix(in srgb, var(--accent-primary) 40%, var(--border-color));
   border-radius: 999px;
+  background: color-mix(in srgb, var(--accent-primary) 7%, transparent);
   font-family: var(--font-mono);
   font-size: var(--text-xs);
-  letter-spacing: 0.04em;
+  letter-spacing: 0.12em;
   text-transform: uppercase;
-  color: var(--color-text-muted);
+  color: color-mix(in srgb, var(--accent-primary) 70%, var(--color-text-primary));
 }
 
 .brandbar__actions {
@@ -108,19 +140,66 @@
 // ---------------------------------------------------------------------------
 
 .ml {
-  --ml-indigo: #818cf8;
-  --ml-violet: #a78bfa;
-  --ml-cyan: #22d3ee;
-  --ml-teal: #2dd4bf;
-  --ml-amber: #fbbf24;
-  --ml-rose: #fb7185;
+  // Dark theme reads Cyberpunk 2077: neon yellow lead, cyan tech, hot pink.
+  --ml-indigo: #fcee09;
+  --ml-violet: #ff2a6d;
+  --ml-cyan: #00f0ff;
+  --ml-teal: #00ff9f;
+  --ml-amber: #ffd60a;
+  --ml-rose: #ff6b9d;
 
   background-color: var(--bg-main);
   background-image:
-    radial-gradient(760px 440px at 10% -6%, rgba(99, 102, 241, 0.20), transparent 72%),
-    radial-gradient(560px 380px at 92% 0%, rgba(34, 211, 238, 0.12), transparent 72%),
-    radial-gradient(680px 420px at 76% 102%, rgba(167, 139, 250, 0.12), transparent 74%);
+    radial-gradient(760px 440px at 10% -6%, rgba(252, 238, 9, 0.14), transparent 72%),
+    radial-gradient(560px 380px at 92% 0%, rgba(0, 240, 255, 0.10), transparent 72%),
+    radial-gradient(680px 420px at 76% 102%, rgba(255, 42, 109, 0.10), transparent 74%);
   background-repeat: no-repeat;
+}
+
+// Accent skins — dark only, mirroring the package token blocks. The hue vars
+// feed the marks/rules; the radial glows echo each skin's lead colours.
+:root:not([data-theme='light'])[data-style='aurora'] .ml {
+  --ml-indigo: #2dff87;
+  --ml-violet: #a78bfa;
+  --ml-cyan: #22d3ee;
+
+  background-image:
+    radial-gradient(760px 440px at 10% -6%, rgba(45, 255, 135, 0.13), transparent 72%),
+    radial-gradient(560px 380px at 92% 0%, rgba(34, 211, 238, 0.10), transparent 72%),
+    radial-gradient(680px 420px at 76% 102%, rgba(167, 139, 250, 0.10), transparent 74%);
+}
+
+:root:not([data-theme='light'])[data-style='neon'] .ml {
+  --ml-indigo: #ff2ea6;
+  --ml-violet: #7c4dff;
+  --ml-cyan: #4d9dff;
+
+  background-image:
+    radial-gradient(760px 440px at 10% -6%, rgba(255, 46, 166, 0.13), transparent 72%),
+    radial-gradient(560px 380px at 92% 0%, rgba(124, 77, 255, 0.10), transparent 72%),
+    radial-gradient(680px 420px at 76% 102%, rgba(77, 157, 255, 0.10), transparent 74%);
+}
+
+:root:not([data-theme='light'])[data-style='sunset'] .ml {
+  --ml-indigo: #ff9e42;
+  --ml-violet: #ff5e62;
+  --ml-cyan: #ff2d95;
+
+  background-image:
+    radial-gradient(760px 440px at 10% -6%, rgba(255, 158, 66, 0.13), transparent 72%),
+    radial-gradient(560px 380px at 92% 0%, rgba(255, 94, 98, 0.10), transparent 72%),
+    radial-gradient(680px 420px at 76% 102%, rgba(255, 45, 149, 0.10), transparent 74%);
+}
+
+:root:not([data-theme='light'])[data-style='ocean'] .ml {
+  --ml-indigo: #38bdf8;
+  --ml-violet: #2dd4bf;
+  --ml-cyan: #4f7dff;
+
+  background-image:
+    radial-gradient(760px 440px at 10% -6%, rgba(56, 189, 248, 0.13), transparent 72%),
+    radial-gradient(560px 380px at 92% 0%, rgba(45, 212, 191, 0.10), transparent 72%),
+    radial-gradient(680px 420px at 76% 102%, rgba(79, 125, 255, 0.10), transparent 74%);
 }
 
 :root[data-theme='light'] .ml {
@@ -135,6 +214,63 @@
     radial-gradient(760px 440px at 10% -6%, rgba(79, 70, 229, 0.10), transparent 72%),
     radial-gradient(560px 380px at 92% 0%, rgba(8, 145, 178, 0.08), transparent 72%),
     radial-gradient(680px 420px at 76% 102%, rgba(124, 58, 237, 0.07), transparent 74%);
+}
+
+// Light-theme skins — ink-weight hues so the landing keeps the chosen skin on
+// paper without the neon washes blowing out.
+:root[data-theme='light'][data-style='cyberpunk'] .ml {
+  --ml-indigo: #8a6d00;
+  --ml-violet: #be185d;
+  --ml-cyan: #0e7490;
+
+  background-image:
+    radial-gradient(760px 440px at 10% -6%, rgba(138, 109, 0, 0.10), transparent 72%),
+    radial-gradient(560px 380px at 92% 0%, rgba(14, 116, 144, 0.08), transparent 72%),
+    radial-gradient(680px 420px at 76% 102%, rgba(190, 24, 93, 0.07), transparent 74%);
+}
+
+:root[data-theme='light'][data-style='aurora'] .ml {
+  --ml-indigo: #047857;
+  --ml-violet: #6d28d9;
+  --ml-cyan: #0e7490;
+
+  background-image:
+    radial-gradient(760px 440px at 10% -6%, rgba(4, 120, 87, 0.10), transparent 72%),
+    radial-gradient(560px 380px at 92% 0%, rgba(14, 116, 144, 0.08), transparent 72%),
+    radial-gradient(680px 420px at 76% 102%, rgba(109, 40, 217, 0.07), transparent 74%);
+}
+
+:root[data-theme='light'][data-style='neon'] .ml {
+  --ml-indigo: #be185d;
+  --ml-violet: #7c3aed;
+  --ml-cyan: #4338ca;
+
+  background-image:
+    radial-gradient(760px 440px at 10% -6%, rgba(190, 24, 93, 0.10), transparent 72%),
+    radial-gradient(560px 380px at 92% 0%, rgba(124, 58, 237, 0.08), transparent 72%),
+    radial-gradient(680px 420px at 76% 102%, rgba(67, 56, 202, 0.07), transparent 74%);
+}
+
+:root[data-theme='light'][data-style='sunset'] .ml {
+  --ml-indigo: #c2410c;
+  --ml-violet: #be123c;
+  --ml-cyan: #a21caf;
+
+  background-image:
+    radial-gradient(760px 440px at 10% -6%, rgba(194, 65, 12, 0.10), transparent 72%),
+    radial-gradient(560px 380px at 92% 0%, rgba(190, 18, 60, 0.08), transparent 72%),
+    radial-gradient(680px 420px at 76% 102%, rgba(162, 28, 175, 0.07), transparent 74%);
+}
+
+:root[data-theme='light'][data-style='ocean'] .ml {
+  --ml-indigo: #0369a1;
+  --ml-violet: #0f766e;
+  --ml-cyan: #3730a3;
+
+  background-image:
+    radial-gradient(760px 440px at 10% -6%, rgba(3, 105, 161, 0.10), transparent 72%),
+    radial-gradient(560px 380px at 92% 0%, rgba(15, 118, 110, 0.08), transparent 72%),
+    radial-gradient(680px 420px at 76% 102%, rgba(55, 48, 163, 0.07), transparent 74%);
 }
 
 // Brand mark and eyebrow carry the first two hues.
@@ -193,15 +329,58 @@ $ml-spectrum: (
   }
 }
 
-// The spectrum is tuned for the dark canvas; on paper every tick is pulled
-// toward the ink so the cool end does not disappear.
-:root[data-theme='light'] {
-  @for $i from 1 through list.length($ml-spectrum) {
+// Dark canvas: the ladder runs the Cyberpunk 2077 ramp — neon yellow decaying
+// through lime into cyan tech — and each accent skin swaps in its own anchors.
+// Ticks are interpolated from 2–3 colours, so a skin never hand-writes 14 hexes.
+$ml-ramp-cyber:  (#fcee09, #6df279, #00f0ff);
+$ml-ramp-aurora: (#2dff87, #22d3ee, #a78bfa);
+$ml-ramp-neon:   (#ff2ea6, #7c4dff, #4d9dff);
+$ml-ramp-sunset: (#ffd60a, #ff5e62, #ff2d95);
+$ml-ramp-ocean:  (#00f0ff, #38bdf8, #2f5cd9);
+
+@function ml-ramp-color($ramp, $t) {
+  $last: list.length($ramp) - 1;
+  $pos: $t * $last;
+  $lo: math.floor($pos);
+  $hi: math.min($lo + 1, $last);
+  $frac: $pos - $lo;
+  @return color.mix(list.nth($ramp, $hi + 1), list.nth($ramp, $lo + 1), math.percentage($frac));
+}
+
+@mixin ml-ramp($ramp) {
+  @for $i from 1 through 14 {
     .ml__ladder span:nth-child(#{$i}) {
-      background: color-mix(in srgb, #{list.nth($ml-spectrum, $i)} 62%, #0b1220);
+      background: ml-ramp-color($ramp, math.div($i - 1, 13));
+      opacity: 0.45 + $i * 0.038;
     }
   }
 }
+
+// The default skin carries every dark canvas; the others layer on top. Light
+// mode is excluded here, so the ink-mix rule below stays the final word.
+:root:not([data-theme='light']) {
+  @include ml-ramp($ml-ramp-cyber);
+}
+:root:not([data-theme='light'])[data-style='aurora'] { @include ml-ramp($ml-ramp-aurora); }
+:root:not([data-theme='light'])[data-style='neon'] { @include ml-ramp($ml-ramp-neon); }
+:root:not([data-theme='light'])[data-style='sunset'] { @include ml-ramp($ml-ramp-sunset); }
+:root:not([data-theme='light'])[data-style='ocean'] { @include ml-ramp($ml-ramp-ocean); }
+
+// Paper pulls every tick toward the ink so the pale end does not disappear;
+// each skin keeps its own anchors, so the light ladder matches the dark one.
+@mixin ml-ramp-light($ramp) {
+  @for $i from 1 through 14 {
+    .ml__ladder span:nth-child(#{$i}) {
+      background: color.mix(ml-ramp-color($ramp, math.div($i - 1, 13)), #0b1220, 62%);
+    }
+  }
+}
+
+:root[data-theme='light'] { @include ml-ramp-light($ml-ramp-cyber); }
+:root[data-theme='light'][data-style='aurora'] { @include ml-ramp-light($ml-ramp-aurora); }
+:root[data-theme='light'][data-style='neon'] { @include ml-ramp-light($ml-ramp-neon); }
+:root[data-theme='light'][data-style='sunset'] { @include ml-ramp-light($ml-ramp-sunset); }
+:root[data-theme='light'][data-style='ocean'] { @include ml-ramp-light($ml-ramp-ocean); }
 
 // Proof strip: each number is a different channel colour.
 .ml__proof > div:nth-child(1) strong { color: var(--ml-indigo); }

@@ -12,8 +12,11 @@ importers:
         specifier: ^0.1.1
         version: 0.1.1
       '@tradade/astra-mastering-ui':
-        specifier: ^0.1.0
-        version: 0.1.0(react-dom@19.3.1(react@19.3.1))(react@19.3.1)
+        specifier: ^0.1.9
+        version: 0.1.9(react-dom@19.3.1(react@19.3.1))(react@19.3.1)
+      fft.js:
+        specifier: ^4.0.4
+        version: 4.0.4
       lucide-react:
         specifier: ^0.363.0
         version: 0.363.0(react@19.3.1)
@@ -407,8 +410,8 @@ packages:
   '@rolldown/pluginutils@1.0.1':
     resolution: {integrity: sha512-2j9bGt5Jh8hj+vPtgzPtl72j0yRxHAyumoo6TNfAjsLB04UtpSvPbPcDcBMxz7n+9CYB0c1GxQFxYRg2jimqGw==}
 
-  '@tradade/astra-mastering-ui@0.1.0':
-    resolution: {integrity: sha512-HfzoYtyhabXj6bGfBzn6BcsLs0zT41xLRrpcllcdEs8vp4FRUerIt8q78FMdntYIextKp/1Mi5XsQeoICUg7+A==}
+  '@tradade/astra-mastering-ui@0.1.9':
+    resolution: {integrity: sha512-VoHEOKoCdy5lZ8FM6k0KdiY1JyqPD4w//CqaVpkIa1/Nz9fJ7QO7u6Jg86j0GUqb3ImRmJCJw2L79tFxlt3ymQ==}
     peerDependencies:
       react: ^19.0.0
       react-dom: ^19.0.0
@@ -1372,7 +1375,7 @@ snapshots:
 
   '@rolldown/pluginutils@1.0.1': {}
 
-  '@tradade/astra-mastering-ui@0.1.0(react-dom@19.3.1(react@19.3.1))(react@19.3.1)':
+  '@tradade/astra-mastering-ui@0.1.9(react-dom@19.3.1(react@19.3.1))(react@19.3.1)':
     dependencies:
       '@tradade/astra-mastering': 0.1.1
       lucide-react: 0.475.0(react@19.3.1)

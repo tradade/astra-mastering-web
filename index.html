@@ -8,7 +8,36 @@
       name="description"
       content="Local-first audio mastering in your browser. Pick a track, shape the chain, export a validated WAV — your audio never leaves this device."
     />
+    <meta name="color-scheme" content="dark light" />
+    <meta name="theme-color" content="#0e1017" media="(prefers-color-scheme: dark)" />
+    <meta name="theme-color" content="#f5f7fb" media="(prefers-color-scheme: light)" />
     <title>Astra Mastering</title>
+    <style>
+      /* Pre-hydration canvas: the dark theme colour so the first paint never
+         flashes white; the light theme repaints as soon as data-theme lands. */
+      html { background: #0e1017; }
+      html[data-theme='light'] { background: #f5f7fb; }
+    </style>
+    <script>
+      // Bootstrap the persisted theme + accent skin before first paint, so the
+      // page never flashes the default Cyber 2077 palette when another skin (or
+      // light mode) is stored. Mirrors MasteringThemeProvider's own storage keys.
+      (function () {
+        try {
+          var root = document.documentElement;
+          var theme = localStorage.getItem('astra_theme');
+          if (theme === 'dark' || theme === 'light') {
+            root.dataset.theme = theme;
+          } else if (window.matchMedia && !window.matchMedia('(prefers-color-scheme: light)').matches) {
+            root.dataset.theme = 'dark';
+          }
+          var style = localStorage.getItem('astra_style');
+          if (style) root.dataset.style = style;
+        } catch (e) {
+          /* Private mode: the provider will pick its defaults. */
+        }
+      })();
+    </script>
   </head>
   <body>
     <div id="root"></div>
